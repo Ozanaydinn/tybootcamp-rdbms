@@ -2,15 +2,9 @@ package com.tybootcamp.ecomm;
 
 import com.github.javafaker.Book;
 import com.github.javafaker.Faker;
+import com.tybootcamp.ecomm.entities.*;
 import com.tybootcamp.ecomm.enums.Gender;
-import com.tybootcamp.ecomm.entities.Category;
-import com.tybootcamp.ecomm.entities.Product;
-import com.tybootcamp.ecomm.entities.Profile;
-import com.tybootcamp.ecomm.entities.Seller;
-import com.tybootcamp.ecomm.repositories.CategoryRepository;
-import com.tybootcamp.ecomm.repositories.ProductJpaRepository;
-import com.tybootcamp.ecomm.repositories.SellerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tybootcamp.ecomm.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,11 +23,19 @@ public class EcommApplication implements CommandLineRunner {
     private final CategoryRepository _categoryRepository;
     private final ProductJpaRepository _productJpaRepository;
     private final SellerRepository _sellerRepository;
+    private final BasketRepository _basketRepository;
+    private final SuperUserRepository _Super_userRepository;
+    private final CustomerRepository _customerRepository;
+    private final BasketProductRepository _basketProductRepository;
 
-    public EcommApplication(CategoryRepository _categoryRepository, ProductJpaRepository _productJpaRepository, SellerRepository _sellerRepository) {
+    public EcommApplication(CategoryRepository _categoryRepository, ProductJpaRepository _productJpaRepository, SellerRepository _sellerRepository, BasketRepository basketRepository, SuperUserRepository superUserRepository, CustomerRepository customerRepository, BasketProductRepository basketProductRepository) {
         this._categoryRepository = _categoryRepository;
         this._productJpaRepository = _productJpaRepository;
         this._sellerRepository = _sellerRepository;
+        this._basketRepository = basketRepository;
+        this._Super_userRepository = superUserRepository;
+        this._customerRepository = customerRepository;
+        _basketProductRepository = basketProductRepository;
     }
 
     public static void main(String[] args) {
@@ -42,21 +44,22 @@ public class EcommApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        _sellerRepository.getById(12l);
+
         //--------------Create two sellers-----------------------------------------
-        Seller judy = new Seller("Judy's account id = 879");
+        Seller judy = new Seller((long)879);
         Profile judyProfile = new Profile(judy, "Judy", "Adams", Gender.Female);
         judyProfile.setBirthday(new SimpleDateFormat("MM/dd/yyyy").parse(("4/12/2010")));
-        judyProfile.setEmailAddress("hi@demo.com");
+        judyProfile.setEmailAddress("hi1@demo.com");
         judy.setProfile(judyProfile);
-        judy = _sellerRepository.save(judy);
+        _sellerRepository.save(judy);
 
 
-        Seller michael = new Seller("Micheal's account id = 023");
+        Seller michael = new Seller((long) 23);
         Profile michaelProfile = new Profile(michael, "Michael", "Martin", Gender.Male);
-        michaelProfile.setEmailAddress("hi@demo.com");
+        michaelProfile.setEmailAddress("hi2@demo.com");
         michael.setProfile(michaelProfile);
         michael = _sellerRepository.save(michael);
+
 
 
         //--------------Create 4 different categories and save them--------------------
@@ -78,8 +81,8 @@ public class EcommApplication implements CommandLineRunner {
         Seller finalMichael = michael;
         Category finalArtCategory = artCategory;
         Category finalWallDecorCategory = wallDecorCategory;
-
-        IntStream.range(1, 100000000).parallel().forEach(
+        /*
+        IntStream.range(1, 100).parallel().forEach(
                 i -> {
                     Book book = new Faker().book();
                     String author = book.author();
@@ -90,5 +93,19 @@ public class EcommApplication implements CommandLineRunner {
                 }
         );
 
+         */
+
+        // Try adding a product to basket
+        Product product = new Product("Lord of the Rings", "Action Figure", "A Frodo action figure from LOTR!", 123.50f, imageUrls, finalMichael, new HashSet<>(Arrays.asList(finalWallDecorCategory)));
+        Basket ozanBasket = new Basket();
+        BasketProduct bp1 = new BasketProduct(product, 2, ozanBasket);
+        ozanBasket.setBasketProducts(new HashSet<>(Arrays.asList(bp1)));
+
+        Customer ozan = new Customer("Ozan");
+        Profile ozanProfile = new Profile(ozan, "Ozan", "Aydın",Gender.Male);
+        ozanProfile.setEmailAddress("hi3@demo.com");
+        ozan.setProfile(ozanProfile);
+        ozan.setBasket(ozanBasket);
+        _customerRepository.save(ozan);
     }
 }

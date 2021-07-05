@@ -9,14 +9,23 @@ public class BasketProduct {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Basket basket;
 
     @NotNull
     private int quantity;
 
-    public BasketProduct(Product product, int quantity) {
-        
+    public BasketProduct(){
+
+    }
+
+    public BasketProduct(Product product, int quantity, Basket basket) {
+        this.product = product;
+        this.quantity = quantity;
+        this.basket = basket;
     }
 
     public Long getId() {
@@ -41,5 +50,13 @@ public class BasketProduct {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
     }
 }

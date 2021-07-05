@@ -18,20 +18,34 @@ public class Basket {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "basket", orphanRemoval = true)
     private Customer customer;
 
-    @ManyToMany(mappedBy = "basketItems", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Product> products = new HashSet<>();
+    @OneToMany
+    private Set<BasketProduct> basketProducts = new HashSet<>();
 
     public Basket() {
 
     }
 
-    public Basket(Long id){ this.id = id; }
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Set<BasketProduct> getBasketProducts() {
+        return basketProducts;
+    }
+
+    public void setBasketProducts(Set<BasketProduct> basketProducts) {
+        this.basketProducts = basketProducts;
     }
 }

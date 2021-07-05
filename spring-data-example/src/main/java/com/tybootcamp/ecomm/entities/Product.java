@@ -42,13 +42,6 @@ public class Product
     @NotNull
     private Set<Category> fallIntoCategories;
 
-    @ManyToMany
-    @JoinTable(name = "basket_items",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "basket_id", referencedColumnName = "id"))
-    @Size(min = 1)
-    @NotNull
-    private Set<Basket> basketItems;
 
     public Product()
     {

@@ -1,47 +1,43 @@
 package com.tybootcamp.ecomm.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer extends SuperUser{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer", orphanRemoval = true)
-    private Profile profile;
+    @OneToOne
+    @JoinColumn(nullable = false)
+    @MapsId
+    @JsonIgnore
+    private Basket basket;
 
     @NotNull
-    private String name;
+    private String customerName;
 
     public Customer(){
 
     }
-
-    public Long getId() {
-        return id;
+    public Customer(String customerName){
+        this.customerName = customerName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Basket getBasket() {
+        return basket;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public void setBasket(Basket basket) {
+        this.basket = basket;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

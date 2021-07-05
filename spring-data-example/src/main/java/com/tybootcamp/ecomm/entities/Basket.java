@@ -15,10 +15,13 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /* Do we want a bi-directional relationship?
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "basket", orphanRemoval = true)
     private Customer customer;
 
-    @OneToMany
+     */
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "basket")
     private Set<BasketProduct> basketProducts = new HashSet<>();
 
     public Basket() {
@@ -31,14 +34,6 @@ public class Basket {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public Set<BasketProduct> getBasketProducts() {

@@ -9,10 +9,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "customers")
 public class Customer extends SuperUser{
 
-    @OneToOne
-    @JoinColumn(nullable = false)
-    @MapsId
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
     private Basket basket;
 
     @NotNull

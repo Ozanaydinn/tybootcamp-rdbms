@@ -12,19 +12,14 @@ import javax.validation.constraints.NotNull;
 public class Profile
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(nullable = false)
-    @MapsId
-    @JsonIgnore
-    private Seller seller;
-
 
     @OneToOne
     @JoinColumn(nullable = false)
     @MapsId
     @JsonIgnore
-    private Customer customer;
+    private SuperUser superUser;
 
     @NotNull
     private String firstName;
@@ -44,32 +39,32 @@ public class Profile
     {
     }
 
-    public Profile(Seller seller, String firstName, String lastName, Gender gender)
+    public Profile(SuperUser superUser, String firstName, String lastName, Gender gender)
     {
-        this.seller = seller;
+        this.superUser = superUser;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
     }
 
-    public long getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(long id)
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Seller getSeller()
+    public SuperUser getUser()
     {
-        return seller;
+        return superUser;
     }
 
-    public void setSeller(Seller seller)
+    public void setUser(SuperUser superUser)
     {
-        this.seller = seller;
+        this.superUser = superUser;
     }
 
     public String getFirstName()

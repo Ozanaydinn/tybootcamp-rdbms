@@ -14,7 +14,7 @@ public class Product
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String name;
     private String name2;
     private String description;
@@ -42,6 +42,14 @@ public class Product
     @NotNull
     private Set<Category> fallIntoCategories;
 
+    @ManyToMany
+    @JoinTable(name = "basket_items",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "basket_id", referencedColumnName = "id"))
+    @Size(min = 1)
+    @NotNull
+    private Set<Basket> basketItems;
+
     public Product()
     {
     }
@@ -57,12 +65,12 @@ public class Product
         this.fallIntoCategories = fallIntoCategories;
     }
 
-    public long getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(long id)
+    public void setId(Long id)
     {
         this.id = id;
     }

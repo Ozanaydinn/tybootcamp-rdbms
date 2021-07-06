@@ -95,7 +95,7 @@ public class EcommApplication implements CommandLineRunner {
 
          */
 
-        // Try adding a product to basket
+        // Hard-coded test case for Basket, Customer and BasketProduct
         Product product = new Product("Lord of the Rings", "Action Figure", "A Frodo action figure from LOTR!", 123.50f, imageUrls, finalMichael, new HashSet<>(Arrays.asList(finalWallDecorCategory)));
         Basket ozanBasket = new Basket();
         BasketProduct bp1 = new BasketProduct(product, 2, ozanBasket);

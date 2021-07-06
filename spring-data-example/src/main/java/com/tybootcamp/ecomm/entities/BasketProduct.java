@@ -3,8 +3,13 @@ package com.tybootcamp.ecomm.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * An entity that is a middle ground between Product and Basket which holds the contents of the baskets.
+ * Columns include a unique id, basket id, customer id and quantity.
+ */
 @Entity
 public class BasketProduct {
+    // Id is not really necessary, we can also set map both foreign keys as primary.
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -12,6 +17,7 @@ public class BasketProduct {
     @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
 
+    // Bi-directional communication. I did this to remove an extra table and have basket id in basket product table.
     @ManyToOne(cascade = CascadeType.ALL)
     private Basket basket;
 
@@ -22,6 +28,7 @@ public class BasketProduct {
 
     }
 
+    // Can use getter and setters
     public BasketProduct(Product product, int quantity, Basket basket) {
         this.product = product;
         this.quantity = quantity;

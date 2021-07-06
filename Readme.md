@@ -1,3 +1,11 @@
+## Work Done
+- In order to complete the Customer entity, I implemented a join table method of inheritance, where I created an abstract User class and made Sellers and Customers extend this class. This way, the relationship becomes one to one between the User class and Profile, which solves the problem where Profile entity requires both Customer and Seller during initialization. 
+- Created entities Basket and BasketProduct. A basket can include many BasketProducts, but one BasketProduct references only one product. I hard-coded a test scenario in the main function and implemented their respective Controllers. 
+
+## TODO
+- Transaction system. 
+- Instead of an entity like BasketProducts, let Basket hold an ArrayList of products and compare the speed and performance with the current solution. 
+
 ## Ön şart
 
 Docker kurulumu işletim sistemine göre değişiyor. Docker'ı kurduktan sonra
